@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const supabase = require('../utils/supabase');
 require('dotenv').config();
 const crypto = require('crypto');
+const { sendPasswordResetEmail } = require('../utils/email');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = '24h';
@@ -280,15 +281,25 @@ const requestPasswordReset = async (req, res) => {
       return res.status(500).json({ error: 'Failed to process password reset request' });
     }
     
-    // Instead of sending an email, return the token in the response
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
-    
-    res.status(200).json({ 
-      message: 'Password reset token generated successfully',
-      resetToken: resetToken,
-      resetUrl: resetUrl,
-      expiresAt: resetTokenExpiry
-    });
+    // Send password reset email
+    try {
+      await sendPasswordResetEmail(user.email, user.name, resetToken);
+      res.status(200).json({ 
+        message: 'Password reset email sent successfully',
+        expiresAt: resetTokenExpiry
+      });
+    } catch (emailError) {
+      console.error('Error sending password reset email:', emailError);
+      // Always fall back to returning token for testing
+      const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+      res.status(200).json({ 
+        message: 'Password reset token generated (email service not configured)',
+        resetToken: resetToken,
+        resetUrl: resetUrl,
+        expiresAt: resetTokenExpiry,
+        note: 'Email sending failed - token provided for testing. Configure SMTP in production.'
+      });
+    }
   } catch (error) {
     console.error('Password reset request error:', error);
     res.status(500).json({ error: 'Internal server error' });

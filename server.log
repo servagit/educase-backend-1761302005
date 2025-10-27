@@ -1,0 +1,7 @@
+
+> educational-assessment-platform@1.0.0 start
+> node --no-deprecation src/index.js
+
+Server running on port 3001
+Password reset email sent: <4993de8e-ce2f-842e-e12d-21addfaaf4f3@gmail.com>
+Password reset email sent: <e7317873-59c5-8532-5adc-7293122fbe03@gmail.com>
