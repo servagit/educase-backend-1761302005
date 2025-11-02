@@ -4,6 +4,7 @@ const supabase = require('../utils/supabase');
 require('dotenv').config();
 const crypto = require('crypto');
 const { sendPasswordResetEmail } = require('../utils/email');
+const { sendPasswordResetEmailViaEdgeFunction } = require('../utils/emailEdgeFunction');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = '24h';
@@ -282,8 +283,15 @@ const requestPasswordReset = async (req, res) => {
     }
     
     // Send password reset email
+    // Try edge function first (works on all platforms), fallback to SMTP
     try {
-      await sendPasswordResetEmail(user.email, user.name, resetToken);
+      // Use edge function if USE_EDGE_FUNCTION is enabled
+      if (process.env.USE_EDGE_FUNCTION === 'true') {
+        await sendPasswordResetEmailViaEdgeFunction(user.email, user.name, resetToken);
+      } else {
+        await sendPasswordResetEmail(user.email, user.name, resetToken);
+      }
+      
       res.status(200).json({ 
         message: 'Password reset email sent successfully',
         expiresAt: resetTokenExpiry
