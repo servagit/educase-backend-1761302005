@@ -207,7 +207,8 @@ const updateUser = async (req, res) => {
     }
     
     // Only allow users to update their own profiles unless admin
-    if (id !== req.user.id && req.user.role !== 'admin') {
+    // Convert id to number for comparison since req.params.id is a string
+    if (parseInt(id) !== req.user.id && req.user.role !== 'admin') {
       return res.status(403).json({ error: 'Permission denied' });
     }
     
