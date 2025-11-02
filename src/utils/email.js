@@ -3,16 +3,12 @@ require('dotenv').config();
 
 // Create reusable transporter object
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'mail.vexperts.tech',
+  host: process.env.SMTP_HOST || 'smtp.sendgrid.net',
   port: parseInt(process.env.SMTP_PORT) || 587,
   secure: false, // false for 587 (STARTTLS), true for 465 (SSL)
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
-  },
-  requireTLS: true, // Force TLS
-  tls: {
-    rejectUnauthorized: false // For self-signed certificates
   }
 });
 
@@ -34,7 +30,7 @@ const sendPasswordResetEmail = async (email, name, resetToken) => {
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
     
     const mailOptions = {
-      from: `"${process.env.EMAIL_FROM_NAME || 'Educase'}" <${process.env.SMTP_USER}>`,
+      from: `"${process.env.EMAIL_FROM_NAME || 'Educase'}" <${process.env.SMTP_FROM_EMAIL || 'educase@vexperts.tech'}>`,
       to: email,
       subject: 'Password Reset Request',
       html: `
@@ -116,7 +112,7 @@ For security reasons, please do not share this link with anyone.
 const sendWelcomeEmail = async (email, name) => {
   try {
     const mailOptions = {
-      from: `"${process.env.EMAIL_FROM_NAME || 'Educase'}" <${process.env.SMTP_USER}>`,
+      from: `"${process.env.EMAIL_FROM_NAME || 'Educase'}" <${process.env.SMTP_FROM_EMAIL || 'educase@vexperts.tech'}>`,
       to: email,
       subject: 'Welcome to Educase!',
       html: `
