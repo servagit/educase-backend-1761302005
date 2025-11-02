@@ -4,12 +4,13 @@ require('dotenv').config();
 // Create reusable transporter object
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'mail.vexperts.tech',
-  port: parseInt(process.env.SMTP_PORT) || 465,
-  secure: true, // true for 465, false for other ports
+  port: parseInt(process.env.SMTP_PORT) || 587,
+  secure: false, // false for 587 (STARTTLS), true for 465 (SSL)
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
   },
+  requireTLS: true, // Force TLS
   tls: {
     rejectUnauthorized: false // For self-signed certificates
   }
