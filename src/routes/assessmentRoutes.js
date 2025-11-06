@@ -15,21 +15,21 @@ const router = express.Router();
 router.use(authMiddleware);
 
 // Get all assessments
-router.get('/', authorize(['teacher', 'admin']), getAssessments);
+router.get('/', authorize(['teacher', 'administrator']), getAssessments);
 
 // Get a single assessment by ID
-router.get('/:id', authorize(['teacher', 'admin']), getAssessmentById);
+router.get('/:id', authorize(['teacher', 'administrator']), getAssessmentById);
 
 // Create a new assessment
-router.post('/', authorize(['teacher', 'admin']), createAssessment);
+router.post('/', authorize(['teacher', 'administrator']), createAssessment);
 
 // Update an assessment
-router.put('/:id', authorize(['teacher', 'admin']), updateAssessment);
+router.put('/:id', authorize(['teacher', 'administrator']), updateAssessment);
 
 // Delete an assessment
-router.delete('/:id', authorize(['teacher', 'admin']), deleteAssessment);
+router.delete('/:id', authorize(['teacher', 'administrator']), deleteAssessment);
 
 // Get assessment results
-router.get('/:id/results', authorize(['teacher', 'admin']), getAssessmentResults);
+router.get('/:id/results', authorize(['teacher', 'administrator']), getAssessmentResults);
 
 module.exports = router; 

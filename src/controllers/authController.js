@@ -152,12 +152,12 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
-// Get all users (admin only)
+// Get all users (administrator only)
 const getUsers = async (req, res) => {
   try {
-    // Only allow admin to access this endpoint
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Permission denied - Admin access required' });
+    // Only allow administrator to access this endpoint
+    if (req.user.role !== 'administrator') {
+      return res.status(403).json({ error: 'Permission denied - Administrator access required' });
     }
     
     const { data: users, error } = await supabase
@@ -199,16 +199,16 @@ const updateUser = async (req, res) => {
     if (name) updateData.name = name;
     if (email) updateData.email = email;
     
-    // Only admin can update roles
-    if (role && req.user.role === 'admin') {
+    // Only administrator can update roles
+    if (role && req.user.role === 'administrator') {
       updateData.role = role;
-    } else if (role && req.user.role !== 'admin') {
+    } else if (role && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Only administrators can update user roles' });
     }
     
-    // Only allow users to update their own profiles unless admin
+    // Only allow users to update their own profiles unless administrator
     // Convert id to number for comparison since req.params.id is a string
-    if (parseInt(id) !== req.user.id && req.user.role !== 'admin') {
+    if (parseInt(id) !== req.user.id && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Permission denied' });
     }
     

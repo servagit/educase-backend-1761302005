@@ -17,31 +17,31 @@ const router = express.Router();
 // All routes require authentication
 router.use(authMiddleware);
 
-// Get all question papers (teachers and admins)
-router.get('/', authorize(['teacher', 'admin']), getQuestionPapers);
+// Get all question papers (teachers and administrators)
+router.get('/', authorize(['teacher', 'administrator']), getQuestionPapers);
 
 // Get question papers created by the current user
-router.get('/my-papers', authorize(['teacher', 'admin']), getMyQuestionPapers);
+router.get('/my-papers', authorize(['teacher', 'administrator']), getMyQuestionPapers);
 
 // Get a single question paper by ID
-router.get('/:id', authorize(['teacher', 'admin']), getQuestionPaperById);
+router.get('/:id', authorize(['teacher', 'administrator']), getQuestionPaperById);
 
 // Create a new question paper
-router.post('/', authorize(['teacher', 'admin']), createQuestionPaper);
+router.post('/', authorize(['teacher', 'administrator']), createQuestionPaper);
 
 // Update a question paper
-router.put('/:id', authorize(['teacher', 'admin']), updateQuestionPaper);
+router.put('/:id', authorize(['teacher', 'administrator']), updateQuestionPaper);
 
 // Delete a question paper
-router.delete('/:id', authorize(['teacher', 'admin']), deleteQuestionPaper);
+router.delete('/:id', authorize(['teacher', 'administrator']), deleteQuestionPaper);
 
 // Generate PDF for a question paper
-router.get('/:id/generate', authorize(['teacher', 'admin']), generatePDF);
+router.get('/:id/generate', authorize(['teacher', 'administrator']), generatePDF);
 
 // Get all addendums for a question paper
-router.get('/:id/addendums', authorize(['teacher', 'admin']), getPaperAddendums);
+router.get('/:id/addendums', authorize(['teacher', 'administrator']), getPaperAddendums);
 
 // Upload addendum for a question paper
-router.post('/:id/addendum', authorize(['teacher', 'admin']), uploadPaperAddendum);
+router.post('/:id/addendum', authorize(['teacher', 'administrator']), uploadPaperAddendum);
 
 module.exports = router; 

@@ -13,15 +13,15 @@ const router = express.Router();
 router.use(authMiddleware);
 
 // Get all annexures
-router.get('/', authorize(['teacher', 'admin']), getAnnexures);
+router.get('/', authorize(['teacher', 'administrator']), getAnnexures);
 
 // Get a single annexure by ID
-router.get('/:id', authorize(['teacher', 'admin']), getAnnexureById);
+router.get('/:id', authorize(['teacher', 'administrator']), getAnnexureById);
 
 // Upload a new annexure
-router.post('/upload', authorize(['teacher', 'admin']), uploadAnnexure);
+router.post('/upload', authorize(['teacher', 'administrator']), uploadAnnexure);
 
 // Delete an annexure
-router.delete('/:id', authorize(['teacher', 'admin']), deleteAnnexure);
+router.delete('/:id', authorize(['teacher', 'administrator']), deleteAnnexure);
 
 module.exports = router; 

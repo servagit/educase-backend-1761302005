@@ -157,8 +157,8 @@ const updateAssessment = async (req, res) => {
       return res.status(404).json({ error: 'Assessment not found' });
     }
     
-    // Only allow the creator or admin to update
-    if (existingAssessment.assigned_by !== req.user.id && req.user.role !== 'admin') {
+    // Only allow the creator or administrator to update
+    if (existingAssessment.assigned_by !== req.user.id && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Permission denied' });
     }
     
@@ -197,8 +197,8 @@ const deleteAssessment = async (req, res) => {
       return res.status(404).json({ error: 'Assessment not found' });
     }
     
-    // Only allow the creator or admin to delete
-    if (existingAssessment.assigned_by !== req.user.id && req.user.role !== 'admin') {
+    // Only allow the creator or administrator to delete
+    if (existingAssessment.assigned_by !== req.user.id && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Permission denied' });
     }
     

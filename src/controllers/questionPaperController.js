@@ -239,8 +239,8 @@ const updateQuestionPaper = async (req, res) => {
       return res.status(404).json({ error: 'Question paper not found' });
     }
 
-    // Only allow the creator or admin to update
-    if (existingPaper.created_by !== req.user.id && req.user.role !== 'admin') {
+    // Only allow the creator or administrator to update
+    if (existingPaper.created_by !== req.user.id && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Permission denied' });
     }
 
@@ -316,8 +316,8 @@ const deleteQuestionPaper = async (req, res) => {
       return res.status(404).json({ error: 'Question paper not found' });
     }
 
-    // Only allow the creator or admin to delete
-    if (existingPaper.created_by !== req.user.id && req.user.role !== 'admin') {
+    // Only allow the creator or administrator to delete
+    if (existingPaper.created_by !== req.user.id && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Permission denied' });
     }
 
@@ -522,8 +522,8 @@ const uploadPaperAddendum = async (req, res) => {
         return res.status(404).json({ error: 'Question paper not found' });
       }
 
-      // Only allow the creator or admin to add addendums
-      if (existingPaper.created_by !== req.user.id && req.user.role !== 'admin') {
+      // Only allow the creator or administrator to add addendums
+      if (existingPaper.created_by !== req.user.id && req.user.role !== 'administrator') {
         return res.status(403).json({ error: 'Permission denied' });
       }
       

@@ -222,8 +222,8 @@ const deleteAnnexure = async (req, res) => {
       return res.status(404).json({ error: 'Annexure not found' });
     }
     
-    // Only allow the creator or admin to delete
-    if (existingAnnexure.created_by !== req.user.id && req.user.role !== 'admin') {
+    // Only allow the creator or administrator to delete
+    if (existingAnnexure.created_by !== req.user.id && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Permission denied' });
     }
     

@@ -432,8 +432,8 @@ const updateQuestion = async (req, res) => {
       return res.status(404).json({ error: 'Question not found' });
     }
 
-    // Only allow the creator or admin to update
-    if (existingQuestion.created_by !== req.user.id && req.user.role !== 'admin') {
+    // Only allow the creator or administrator to update
+    if (existingQuestion.created_by !== req.user.id && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Permission denied' });
     }
 
@@ -487,8 +487,8 @@ const deleteQuestion = async (req, res) => {
       return res.status(404).json({ error: 'Question not found' });
     }
 
-    // Only allow the creator or admin to delete
-    if (existingQuestion.created_by !== req.user.id && req.user.role !== 'admin') {
+    // Only allow the creator or administrator to delete
+    if (existingQuestion.created_by !== req.user.id && req.user.role !== 'administrator') {
       return res.status(403).json({ error: 'Permission denied' });
     }
 
@@ -537,8 +537,8 @@ const uploadAddendum = async (req, res) => {
         return res.status(404).json({ error: 'Question not found' });
       }
 
-      // Only allow the creator or admin to add addendums
-      if (existingQuestion.created_by !== req.user.id && req.user.role !== 'admin') {
+      // Only allow the creator or administrator to add addendums
+      if (existingQuestion.created_by !== req.user.id && req.user.role !== 'administrator') {
         return res.status(403).json({ error: 'Permission denied' });
       }
       

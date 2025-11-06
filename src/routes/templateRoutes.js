@@ -14,18 +14,18 @@ const router = express.Router();
 router.use(authMiddleware);
 
 // Get all templates
-router.get('/', authorize(['teacher', 'admin']), getTemplates);
+router.get('/', authorize(['teacher', 'administrator']), getTemplates);
 
 // Get a single template by ID
-router.get('/:id', authorize(['teacher', 'admin']), getTemplateById);
+router.get('/:id', authorize(['teacher', 'administrator']), getTemplateById);
 
 // Create a new template
-router.post('/', authorize(['teacher', 'admin']), createTemplate);
+router.post('/', authorize(['teacher', 'administrator']), createTemplate);
 
 // Update a template
-router.put('/:id', authorize(['teacher', 'admin']), updateTemplate);
+router.put('/:id', authorize(['teacher', 'administrator']), updateTemplate);
 
 // Delete a template
-router.delete('/:id', authorize(['admin']), deleteTemplate);
+router.delete('/:id', authorize(['administrator']), deleteTemplate);
 
 module.exports = router; 

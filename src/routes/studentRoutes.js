@@ -15,11 +15,11 @@ const router = express.Router();
 // All routes require authentication
 router.use(authMiddleware);
 
-// Get all students (admin only)
-router.get('/', authorize(['admin']), getStudents);
+// Get all students (administrator only)
+router.get('/', authorize(['administrator']), getStudents);
 
-// Get students by teacher ID (admin and teachers)
-router.get('/by-teacher', authorize(['admin', 'teacher']), getStudentsByTeacher);
+// Get students by teacher ID (administrator and teachers)
+router.get('/by-teacher', authorize(['administrator', 'teacher']), getStudentsByTeacher);
 
 // Get current teacher's students
 router.get('/my-students', authorize(['teacher']), getMyStudents);
@@ -28,15 +28,15 @@ router.get('/my-students', authorize(['teacher']), getMyStudents);
 // to prevent the "my-students" path from being treated as an ID
 
 // Get a single student by ID
-router.get('/:id', authorize(['admin', 'teacher']), getStudentById);
+router.get('/:id', authorize(['administrator', 'teacher']), getStudentById);
 
 // Create a new student
-router.post('/', authorize(['admin', 'teacher']), createStudent);
+router.post('/', authorize(['administrator', 'teacher']), createStudent);
 
 // Update a student
-router.put('/:id', authorize(['admin', 'teacher']), updateStudent);
+router.put('/:id', authorize(['administrator', 'teacher']), updateStudent);
 
 // Delete a student
-router.delete('/:id', authorize(['admin']), deleteStudent);
+router.delete('/:id', authorize(['administrator']), deleteStudent);
 
 module.exports = router; 
