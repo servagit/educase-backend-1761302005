@@ -13,7 +13,7 @@ const authMiddleware = (req, res, next) => {
     
     const token = authHeader.split(' ')[1];
     
-    if (!token) {
+    if (!token || token === 'undefined' || token === 'null') {
       return res.status(401).json({ error: 'Unauthorized - Invalid token format' });
     }
     
@@ -22,7 +22,17 @@ const authMiddleware = (req, res, next) => {
     
     next();
   } catch (error) {
-    console.error('Authentication error:', error);
+    // Only log the error type and endpoint, not the full stack trace for common JWT errors
+    if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+      console.log(`Auth failed: ${error.name} on ${req.method} ${req.path}`);
+    } else {
+      console.error('Authentication error:', error);
+    }
+    
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ error: 'Unauthorized - Token expired' });
+    }
+    
     return res.status(401).json({ error: 'Unauthorized - Invalid token' });
   }
 };

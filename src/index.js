@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 3001;
 // CORS configuration
 const allowedOrigins = [
   'https://educase-frontend-chi.vercel.app',
+  'https://educase-frontend-git-main-vexperts-assembles-projects.vercel.app',
   'http://localhost:3000',
   'http://localhost:3001' // Add backend localhost for testing
 ];
@@ -30,7 +31,12 @@ app.use(cors({
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
+    // Check if origin is in allowed origins list
     if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    }
+    // Also allow all Vercel preview deployments for educase-frontend
+    else if (origin && (origin.includes('educase-frontend') && origin.includes('.vercel.app'))) {
       callback(null, true);
     } else {
       console.log('CORS blocked origin:', origin);
